@@ -1,9 +1,7 @@
 package com.example.mytestapplication.network
 
-import ResWeather
-import androidx.lifecycle.LiveData
+import com.example.mytestapplication.data.ResWeather
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface WeatherService {

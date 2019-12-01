@@ -1,3 +1,5 @@
+package com.example.mytestapplication.data
+
 data class Weather(
     val description: String?,
     val icon: String? = null,

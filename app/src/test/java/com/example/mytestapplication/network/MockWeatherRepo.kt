@@ -1,10 +1,10 @@
 package com.example.mytestapplication.network
 
-import ResWeather
-import Weather
-import X
+import com.example.mytestapplication.data.ResWeather
+import com.example.mytestapplication.data.Weather
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.example.mytestapplication.data.X
 
 class MockWeatherRepo : WeatherRepo {
 

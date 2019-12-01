@@ -1,3 +1,5 @@
+package com.example.mytestapplication.data
+
 data class X(
     val clouds: Int? = null,
     val deg: Int? = null,

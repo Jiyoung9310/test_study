@@ -1,16 +1,11 @@
 package com.example.mytestapplication
 
-import ResWeather
-import X
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.example.mytestapplication.data.X
 import com.example.mytestapplication.network.WeatherRepo
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
 
 class MainViewModel(val repo: WeatherRepo) : ViewModel() {
 

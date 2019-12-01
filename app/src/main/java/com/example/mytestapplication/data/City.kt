@@ -1,3 +1,5 @@
+package com.example.mytestapplication.data
+
 data class City(
     val country: String,
     val geoname_id: Int,

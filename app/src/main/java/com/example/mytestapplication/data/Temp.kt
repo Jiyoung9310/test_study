@@ -1,3 +1,5 @@
+package com.example.mytestapplication.data
+
 data class Temp(
     val day: Double,
     val eve: Double,

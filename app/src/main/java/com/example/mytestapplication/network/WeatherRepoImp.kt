@@ -1,6 +1,6 @@
 package com.example.mytestapplication.network
 
-import ResWeather
+import com.example.mytestapplication.data.ResWeather
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import retrofit2.Call
