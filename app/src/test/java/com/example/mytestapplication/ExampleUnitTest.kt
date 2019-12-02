@@ -85,6 +85,12 @@ class ExampleUnitTest {
 
     }
 
+
+
+    /**
+     * ---------------------로그인 로직 테스트--------------------------------
+     * */
+
     @Test
     fun `(given) ID or PW empty (when) x (then) 로그인 버튼 비활성화`() {
         val expectedResult = false
