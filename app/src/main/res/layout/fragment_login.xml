@@ -7,14 +7,14 @@
 
         <variable
             name="vm"
-            type="com.example.mytestapplication.LoginViewModel" />
+            type="com.example.mytestapplication.login.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="15dp"
-        tools:context=".LoginFragment">
+        tools:context=".login.LoginFragment">
 
         <TextView
             android:id="@+id/tvID"

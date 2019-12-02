@@ -1,4 +1,4 @@
-package com.example.mytestapplication
+package com.example.mytestapplication.login
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.example.mytestapplication.R
 import com.example.mytestapplication.databinding.FragmentLoginBinding
 
 
@@ -24,7 +25,8 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_login, container, false)
+        binding = DataBindingUtil.inflate(inflater,
+            R.layout.fragment_login, container, false)
         return binding.root
     }
 

@@ -1,4 +1,4 @@
-package com.example.mytestapplication
+package com.example.mytestapplication.login
 
 import androidx.lifecycle.ViewModel
 

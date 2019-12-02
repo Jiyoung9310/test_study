@@ -1,10 +1,10 @@
-package com.example.mytestapplication
+package com.example.mytestapplication.login
 
-import android.util.Patterns
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.mytestapplication.R
 import java.util.regex.Pattern
 
 

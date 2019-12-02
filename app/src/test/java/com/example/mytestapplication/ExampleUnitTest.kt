@@ -1,12 +1,13 @@
 package com.example.mytestapplication
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.example.mytestapplication.login.BaseViewModel
+import com.example.mytestapplication.login.LoginViewModel
 import com.example.mytestapplication.network.MockWeatherRepo
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import kotlin.math.exp
 
 /**
  * Example local unit test, which will execute on the development machine (host).
