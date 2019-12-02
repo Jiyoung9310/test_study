@@ -6,6 +6,7 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import kotlin.math.exp
 
 /**
  * Example local unit test, which will execute on the development machine (host).
@@ -23,6 +24,7 @@ class ExampleUnitTest {
     private lateinit var mainVM : MainViewModel
     private lateinit var mainVM2 : MainView2Model
     private lateinit var loginVM : LoginViewModel
+    private lateinit var baseVM : BaseViewModel
 
 
     @Before
@@ -30,6 +32,7 @@ class ExampleUnitTest {
         mainVM = MainViewModel(MockWeatherRepo())
         mainVM2 = MainView2Model()
         loginVM = LoginViewModel()
+        baseVM = BaseViewModel()
     }
 
     @Test
@@ -82,7 +85,7 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun `(when) ID, PW 둘중 하나라도 입력 안되어있으면 (then) 로그인 버튼 비활성화`() {
+    fun `(given) ID or PW empty (when) x (then) 로그인 버튼 비활성화`() {
         val expectedResult = false
         loginVM.userID.postValue("1312")
         loginVM.userPW.postValue("")
@@ -92,27 +95,51 @@ class ExampleUnitTest {
     }
 
     @Test
-    fun `(when) 비밀번호 입력 시, (then) * 으로 표기`() {
-        
+    fun `(given) 형식이 다른 ID 입력 (when) 로그인 버튼 클릭 시 (then) 에러토스트 메시지`() {
+        val expectedResult = R.string.valid_error_id_format
+        loginVM.userID.postValue("dkdlel298")
+        loginVM.onClickLogin()
+        loginVM.validMessage.observeForever {
+            assertEquals(expectedResult, it)
+        }
     }
 
     @Test
-    fun `(when) ID, PW 채워져 있으면 (then) 로그인 버튼 활성화`() {
-
+    fun `(given) 형식이 다른 PW 입력 (when) 로그인 버튼 클릭 시 (then) 에러토스트 메시지`() {
+        val expectedResult = R.string.valid_error_pw_format
+        loginVM.userID.postValue("dkdlel298@naver.com")
+        loginVM.userPW.postValue("1234")
+        loginVM.onClickLogin()
+        loginVM.validMessage.observeForever {
+            assertEquals(expectedResult, it)
+        }
     }
 
     @Test
-    fun `(when) 로그인 버튼 클릭 시 (then) 입력 형식 확인`() {
-
-    }
-
-    @Test
-    fun `(when) 로그인 완료 후 화면 이동 시 (then) Home Fragment 로 전환`() {
-
+    fun `(given) 형식이 올바른 ID, PW 입력 (when) 로그인 버튼 클릭 시 (then) HomeFragment 이동`() {
+        val expectedResult = true
+        loginVM.userID.postValue("dkdlel298@naver.com")
+        loginVM.userPW.postValue("12341234")
+        loginVM.onClickLogin()
+        loginVM.validMessage.observeForever {
+            when(it) {
+                0 -> baseVM.loginSuccess()
+            }
+        }
+        baseVM.homeEvent.observeForever {
+            assertEquals(expectedResult, it)
+        }
     }
 
     @Test
     fun `(when) 회원가입 클릭 시 (then) SignIn Fragment 로 전환`() {
-
+        val expectedResult = true
+        loginVM.onClickSignIn()
+        loginVM.signinEvent.observeForever {
+            if(it) baseVM.signInEvent()
+        }
+        baseVM.signinEvent.observeForever {
+            assertEquals(expectedResult, it)
+        }
     }
 }

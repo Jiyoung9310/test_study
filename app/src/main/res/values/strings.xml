@@ -8,4 +8,7 @@
     <string name="pw_title">PW</string>
     <string name="login_btn">로그인</string>
     <string name="go_sign_in_btn"><u>회원가입 하기></u></string>
+
+    <string name="valid_error_id_format">잘못된 형식입니다.</string>
+    <string name="valid_error_pw_format">비밀번호는 최소 6자리 입력해주세요.</string>
 </resources>

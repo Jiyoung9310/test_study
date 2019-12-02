@@ -32,6 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:text="@={vm.userID}"
+            android:inputType="textEmailAddress"
             app:layout_constraintBottom_toBottomOf="@id/tvID"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvID"
@@ -52,19 +53,21 @@
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:text="@={vm.userPW}"
+            android:inputType="textPassword"
             app:layout_constraintBottom_toBottomOf="@id/tvPW"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tvPW"
             app:layout_constraintTop_toTopOf="@id/tvPW" />
 
-        <Button
+        <TextView
             android:id="@+id/btnLogin"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:layout_marginTop="10dp"
-            android:enabled="@{vm.loginEnable}"
+            android:background="@drawable/login_background_drawable"
             android:gravity="center"
             android:text="@string/login_btn"
+            android:onClick="@{() -> vm.onClickLogin()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etPW" />
@@ -75,6 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/go_sign_in_btn"
+            android:onClick="@{() -> vm.onClickSignIn()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/btnLogin" />
