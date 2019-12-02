@@ -22,12 +22,14 @@ class ExampleUnitTest {
 
     private lateinit var mainVM : MainViewModel
     private lateinit var mainVM2 : MainView2Model
+    private lateinit var loginVM : LoginViewModel
 
 
     @Before
     fun before() {
         mainVM = MainViewModel(MockWeatherRepo())
         mainVM2 = MainView2Model()
+        loginVM = LoginViewModel()
     }
 
     @Test
@@ -76,6 +78,41 @@ class ExampleUnitTest {
 
     @Test
     fun `(when) 연산할 숫자가 바뀌면, (then) 결과가 바뀜`() {
+
+    }
+
+    @Test
+    fun `(when) ID, PW 둘중 하나라도 입력 안되어있으면 (then) 로그인 버튼 비활성화`() {
+        val expectedResult = false
+        loginVM.userID.postValue("1312")
+        loginVM.userPW.postValue("")
+        loginVM.loginEnable.observeForever {
+            assertEquals(expectedResult, it)
+        }
+    }
+
+    @Test
+    fun `(when) 비밀번호 입력 시, (then) * 으로 표기`() {
+        
+    }
+
+    @Test
+    fun `(when) ID, PW 채워져 있으면 (then) 로그인 버튼 활성화`() {
+
+    }
+
+    @Test
+    fun `(when) 로그인 버튼 클릭 시 (then) 입력 형식 확인`() {
+
+    }
+
+    @Test
+    fun `(when) 로그인 완료 후 화면 이동 시 (then) Home Fragment 로 전환`() {
+
+    }
+
+    @Test
+    fun `(when) 회원가입 클릭 시 (then) SignIn Fragment 로 전환`() {
 
     }
 }

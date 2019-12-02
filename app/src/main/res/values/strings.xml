@@ -3,4 +3,9 @@
 
     <string name="temp">23</string>
     <string name="result">결과 : %s</string>
+
+    <string name="id_title">ID</string>
+    <string name="pw_title">PW</string>
+    <string name="login_btn">로그인</string>
+    <string name="go_sign_in_btn"><u>회원가입 하기></u></string>
 </resources>
