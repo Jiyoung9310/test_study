@@ -6,7 +6,7 @@ import androidx.test.platform.app.InstrumentationRegistry
 import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.data.MemoTile
-import com.example.mytestapplication.memo.ui.MemoViewModel
+import com.example.mytestapplicaton.memo.ui.MemoViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
