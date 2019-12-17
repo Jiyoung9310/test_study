@@ -1,11 +1,8 @@
 package com.example.mytestapplication.memo.data
 
-import android.content.Context
 import androidx.room.Database
-import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 
 /**
  * Created by jiyoung on 16/12/2019

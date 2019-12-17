@@ -12,7 +12,7 @@ import java.util.*
 data class Memo(
     @PrimaryKey @ColumnInfo(name = "id") val memoId: String,
     val title: String,
-    val category: String,
+    val category: String, //할일, 아이디어, 기타
     val description: String,
     val writeDt: Calendar = Calendar.getInstance()
     )

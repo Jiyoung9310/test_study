@@ -25,6 +25,9 @@ android {
     dataBinding {
         enabled = true
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -35,7 +38,7 @@ dependencies {
     def retrofit_version = "2.6.1"
     def okhttp_version = "3.12.1"
     def materialVersion = '1.2.0-alpha02'
-    def roomVersion = '2.1.0'
+    def roomVersion = '2.2.2'
 
     // AndroidX
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -47,8 +50,6 @@ dependencies {
     implementation "androidx.room:room-ktx:$roomVersion"
     implementation "androidx.room:room-runtime:$roomVersion"
     kapt "androidx.room:room-compiler:$roomVersion"
-    testImplementation "androidx.room:room-ktx:$roomVersion"
-    testImplementation "androidx.room:room-runtime:$roomVersion"
 
     // Network
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -57,10 +58,16 @@ dependencies {
 
     // Test
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle"
     testImplementation 'junit:junit:4.12'
+    testImplementation 'org.mockito:mockito-core:2.28.2'
     testImplementation "androidx.arch.core:core-testing:$lifecycle"
+    testImplementation "androidx.room:room-ktx:$roomVersion"
+    testImplementation "androidx.room:room-runtime:$roomVersion"
+    testImplementation "androidx.room:room-testing:$roomVersion"
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test:rules:1.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
