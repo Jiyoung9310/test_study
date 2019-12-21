@@ -15,17 +15,17 @@ class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
     private val _memoListData = Transformations.map(memoRepo.getMemoList()) {
         val list = arrayListOf<MemoTile>()
         it.forEach { memo ->
-            list.add(MemoTile(memo.title, simpleDateFormat.format(memo.writeDt.time)))
+            list.add(MemoTile(memo.memoId, memo.title, simpleDateFormat.format(memo.writeDt.time)))
         }
-        list
+        Event(list)
     }
-    val memoListData : LiveData<ArrayList<MemoTile>> get() = _memoListData
+    val memoListData : LiveData<Event<ArrayList<MemoTile>>> get() = _memoListData
 
     private val _showEmptyMessage = MediatorLiveData<Boolean>().apply { this.postValue(true) }
     val showEmptyMessage : LiveData<Boolean> get() = _showEmptyMessage
 
     init {
-        _showEmptyMessage.addSource(_memoListData) { _showEmptyMessage.value = it.isEmpty()}
+        _showEmptyMessage.addSource(_memoListData) { _showEmptyMessage.value = it.peekContent().isEmpty()}
     }
 
 }

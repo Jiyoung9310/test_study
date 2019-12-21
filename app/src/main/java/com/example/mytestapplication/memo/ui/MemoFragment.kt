@@ -10,6 +10,7 @@ import com.example.mytestapplication.base.eventObserver
 import com.example.mytestapplication.databinding.FragmentMemoBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
 import com.example.mytestapplication.memo.data.MemoRepository
+import com.example.mytestapplication.memo.ui.adapter.MemoListAdapter
 
 class MemoFragment : Fragment() {
 
@@ -21,6 +22,7 @@ class MemoFragment : Fragment() {
     private lateinit var viewModel: MemoViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
     private lateinit var binding: FragmentMemoBinding
+    private val adapter: MemoListAdapter = MemoListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,6 +42,10 @@ class MemoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        binding.rvList.adapter = adapter
+        viewModel.memoListData.observe(this, eventObserver {
+            it.let(adapter::submitList)
+        })
     }
 
 }

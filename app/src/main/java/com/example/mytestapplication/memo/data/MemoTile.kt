@@ -6,6 +6,7 @@ import java.util.*
  * Created by jiyoung on 16/12/2019
  */
 data class MemoTile(
+    val id : String,
     val title : String,
     val lastUpdate: String
 )
