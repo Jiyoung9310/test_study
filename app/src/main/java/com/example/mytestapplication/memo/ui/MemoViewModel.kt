@@ -1,16 +1,17 @@
 package com.example.mytestapplication.memo.ui
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import com.example.mytestapplication.base.Event
 import com.example.mytestapplication.memo.data.Memo
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.data.MemoTile
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
-    private val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
+    private val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd", Locale.KOREA)
+
     private val _memoListData = Transformations.map(memoRepo.getMemoList()) {
         val list = arrayListOf<MemoTile>()
         it.forEach { memo ->
@@ -20,10 +21,11 @@ class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
     }
     val memoListData : LiveData<ArrayList<MemoTile>> get() = _memoListData
 
-    private val _showEmptyMessage = MutableLiveData<Boolean>()
+    private val _showEmptyMessage = MediatorLiveData<Boolean>().apply { this.postValue(true) }
     val showEmptyMessage : LiveData<Boolean> get() = _showEmptyMessage
 
-    fun isListEmpty(isEmpty : Boolean) {
-        _showEmptyMessage.value = isEmpty
+    init {
+        _showEmptyMessage.addSource(_memoListData) { _showEmptyMessage.value = it.isEmpty()}
     }
+
 }

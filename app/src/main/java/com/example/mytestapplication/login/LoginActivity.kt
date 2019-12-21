@@ -14,8 +14,7 @@ import com.example.mytestapplication.R
  */
 class LoginActivity : AppCompatActivity() {
 
-    private val viewModelFactory =
-        LoginModelFactory()
+    private val viewModelFactory = LoginModelFactory()
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory).get(
         BaseViewModel::class.java) }
 

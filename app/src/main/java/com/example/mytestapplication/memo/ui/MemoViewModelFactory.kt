@@ -1,9 +1,8 @@
-package com.example.mytestapplication.memo
+package com.example.mytestapplication.memo.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.example.mytestapplication.memo.data.MemoRepository
-import com.example.mytestapplication.memo.ui.MemoViewModel
 
 class MemoViewModelFactory(val memoRepo : MemoRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {

@@ -1,5 +1,7 @@
 package com.example.mytestapplication.base
 
+import androidx.lifecycle.Observer
+
 open class Event<out T>(private val content: T) {
 
     var hasBeenHandled = false
@@ -21,4 +23,12 @@ open class Event<out T>(private val content: T) {
      * Returns the content, even if it's already been handled.
      */
     fun peekContent(): T = content
+}
+
+fun <T> eventObserver(callback: (T) -> Unit): Observer<Event<T>> {
+    return Observer {
+        it?.getContentIfNotHandled()?.let {
+            callback.invoke(it)
+        }
+    }
 }
