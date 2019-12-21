@@ -13,9 +13,9 @@ class MemoRepository private constructor(private val memoDao: MemoDao) {
         // For Singleton instantiation
         @Volatile private var instance: MemoRepository? = null
 
-        fun getInstance(plantDao: MemoDao) =
+        fun getInstance(memoDao: MemoDao) =
             instance ?: synchronized(this) {
-                instance ?: MemoRepository(plantDao).also { instance = it }
+                instance ?: MemoRepository(memoDao).also { instance = it }
             }
     }
 }

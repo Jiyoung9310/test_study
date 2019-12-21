@@ -13,5 +13,5 @@ interface MemoDao {
     fun getMemoList(): LiveData<List<Memo>>
 
     @Query("SELECT * FROM memo WHERE id = :memoId")
-    fun getMemo(memoId: String): LiveData<Memo>
+    fun getMemo(memoId: String): LiveData<Memo>?
 }

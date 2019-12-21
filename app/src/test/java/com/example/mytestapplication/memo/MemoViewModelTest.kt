@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.room.Room
+import com.example.mytestapplication.memo.dao.MemoDaoTestImp
 import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.data.MemoTile
@@ -25,10 +26,7 @@ class MemoViewModelTest {
 
     @Before
     fun setUp() {
-        val appContext = Mockito.mock(Application::class.java)
-
-        val memoRepo = MemoRepository.getInstance(memoDatabase.memoDao())
-        viewModel = MemoViewModel(memoRepo)
+        viewModel = MemoViewModel(MemoRepository.getInstance(MemoDaoTestImp()))
     }
 
     @Test
@@ -45,9 +43,9 @@ class MemoViewModelTest {
     @Test
     fun `(Given) 앱 실행 시 (When) 메모가 있으면 (Then) 제목, 날짜 표시`() {
         val expectedResult = arrayListOf(
-            MemoTile("메모1", "2019.12.01"),
-            MemoTile("메모2", "2019.12.02"),
-            MemoTile("메모3", "2019.12.03")
+            MemoTile("메모1", "2019.12.17"),
+            MemoTile("메모2", "2019.12.17"),
+            MemoTile("메모3", "2019.12.17")
         )
         viewModel.memoListData.observeForever{
             assertEquals(expectedResult, it)

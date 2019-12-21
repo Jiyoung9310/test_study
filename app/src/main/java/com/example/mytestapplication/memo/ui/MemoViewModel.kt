@@ -7,12 +7,14 @@ import androidx.lifecycle.ViewModel
 import com.example.mytestapplication.memo.data.Memo
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.data.MemoTile
+import java.text.SimpleDateFormat
 
 class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
+    private val simpleDateFormat = SimpleDateFormat("yyyy.MM.dd")
     private val _memoListData = Transformations.map(memoRepo.getMemoList()) {
         val list = arrayListOf<MemoTile>()
         it.forEach { memo ->
-            MemoTile(memo.title, memo.writeDt.toString())
+            list.add(MemoTile(memo.title, simpleDateFormat.format(memo.writeDt.time)))
         }
         list
     }
