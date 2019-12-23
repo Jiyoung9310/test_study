@@ -24,8 +24,15 @@ class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
     private val _showEmptyMessage = MediatorLiveData<Boolean>().apply { this.postValue(true) }
     val showEmptyMessage : LiveData<Boolean> get() = _showEmptyMessage
 
+    private val _floatingButtonEvent = MutableLiveData<Event<Boolean>>()
+    val floatingButtonEvent : LiveData<Event<Boolean>> get() = _floatingButtonEvent
+
     init {
         _showEmptyMessage.addSource(_memoListData) { _showEmptyMessage.value = it.peekContent().isEmpty()}
+    }
+
+    fun onClickFloatingButton() {
+        _floatingButtonEvent.value = Event(true)
     }
 
 }

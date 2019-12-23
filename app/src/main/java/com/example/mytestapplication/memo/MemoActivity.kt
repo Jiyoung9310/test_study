@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.lifecycle.ViewModelProviders
 import com.example.mytestapplication.R
+import com.example.mytestapplication.base.eventObserver
+import com.example.mytestapplication.login.HomeFragment
 import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
+import com.example.mytestapplication.memo.ui.MemoAddFragment
 import com.example.mytestapplication.memo.ui.MemoFragment
 
 class MemoActivity : AppCompatActivity() {
@@ -28,8 +31,21 @@ class MemoActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, MemoFragment.newInstance())
                 .commitNow()
+            supportActionBar?.setTitle(R.string.memo_main_actionbar_title)
         }
 
+        viewModel.navigateAddEvent.observe(this, eventObserver {
+            if(it) {
+                supportFragmentManager.beginTransaction().replace(
+                    R.id.container,
+                    MemoAddFragment()
+                ).commitNow()
+                supportActionBar?.run{
+                    setTitle(R.string.memo_add_actionbar_title)
+                    setDisplayHomeAsUpEnabled(true)
+                }
+            }
+        })
     }
 
 }

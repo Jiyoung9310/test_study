@@ -17,10 +17,12 @@ class MemoViewModelTest {
     var instantExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var viewModel : MemoViewModel
+    private lateinit var baseViewModel : MemoBaseViewModel
 
     @Before
     fun setUp() {
 //        viewModel = MemoViewModel(MemoRepository.getInstance(MemoDaoTestImp()))
+        baseViewModel = MemoBaseViewModel(MemoRepository.getInstance(FakeMemoDatabase()))
     }
 
     @Test
@@ -45,5 +47,21 @@ class MemoViewModelTest {
             println("memoListData : ${it.peekContent()}")
             assertEquals(expectedResult, it.peekContent())
         }
+    }
+
+    @Test
+    fun `(Given) 홈 화면에서 (When) +버튼 누르면 (Then) 화면 이동`() {
+        viewModel = MemoViewModel(baseViewModel.memoRepo)
+        val expectedResult = true
+        viewModel.floatingButtonEvent.observeForever {
+            println("floatingButtonEvent : ${it.peekContent()}")
+            baseViewModel.navigateAddEvent()
+        }
+        baseViewModel.navigateAddEvent.observeForever {
+            println("navigateAddEvent : ${it.peekContent()}")
+            assertEquals(expectedResult, it.peekContent())
+        }
+        viewModel.onClickFloatingButton()
+
     }
 }

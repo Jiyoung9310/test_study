@@ -46,6 +46,10 @@ class MemoFragment : Fragment() {
         viewModel.memoListData.observe(this, eventObserver {
             it.let(adapter::submitList)
         })
+
+        viewModel.floatingButtonEvent.observe(this, eventObserver {
+            baseViewModel.navigateAddEvent()
+        })
     }
 
 }

@@ -12,5 +12,10 @@
     <string name="valid_error_id_format">잘못된 형식입니다.</string>
     <string name="valid_error_pw_format">비밀번호는 최소 6자리 입력해주세요.</string>
 
+    // 메모 메인
+    <string name="memo_main_actionbar_title">메모</string>
     <string name="memo_list_empty">저장된 메모가 없습니다.</string>
+
+    // 메모 추가
+    <string name="memo_add_actionbar_title">메모 추가</string>
 </resources>
