@@ -50,7 +50,7 @@ class MemoViewModelTest {
     }
 
     @Test
-    fun `(Given) 홈 화면에서 (When) +버튼 누르면 (Then) 화면 이동`() {
+    fun `(Given) 홈 화면에서 (When) +버튼 누르면 (Then) 메모추가 화면으로 이동`() {
         viewModel = MemoViewModel(baseViewModel.memoRepo)
         val expectedResult = true
         viewModel.floatingButtonEvent.observeForever {
@@ -62,6 +62,5 @@ class MemoViewModelTest {
             assertEquals(expectedResult, it.peekContent())
         }
         viewModel.onClickFloatingButton()
-
     }
 }

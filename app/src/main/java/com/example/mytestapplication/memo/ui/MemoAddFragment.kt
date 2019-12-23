@@ -11,9 +11,7 @@ import com.example.mytestapplication.R
 
 class MemoAddFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = MemoAddFragment()
-    }
+    val TAG = this@MemoAddFragment.tag
 
     private lateinit var viewModel: MemoAddViewModel
 
