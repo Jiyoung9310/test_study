@@ -11,7 +11,7 @@ import androidx.room.TypeConverters
  */
 @Database(
     entities = [Memo::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)

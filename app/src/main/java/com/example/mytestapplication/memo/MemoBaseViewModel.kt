@@ -14,12 +14,18 @@ class MemoBaseViewModel(val memoRepo : MemoRepository) : ViewModel() {
     private val _navigateMainEvent = MutableLiveData<Event<Boolean>>()
     val navigateMainEvent : LiveData<Event<Boolean>> get() = _navigateMainEvent
 
+    private val _navigateDetailEvent = MutableLiveData<Event<Boolean>>()
+    val navigateDetailEvent get() = _navigateDetailEvent
 
     fun navigateAddEvent() {
         _navigateAddEvent.value = Event(true)
     }
 
     fun navigateMainEvent() {
+        _navigateMainEvent.value = Event(true)
+    }
+
+    fun navigateDetailEvent() {
         _navigateMainEvent.value = Event(true)
     }
 

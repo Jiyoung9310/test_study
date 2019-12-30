@@ -1,13 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".memo.ui.MemoAddFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
+    <data>
+        <variable
+            name="vm"
+            type="com.example.mytestapplication.memo.ui.MemoAddViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Hello" />
+        >
 
-</FrameLayout>
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMemoTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:hint="@string/memo_add_title_hint"
+            android:singleLine="true"
+            android:text="@={vm.memoTitle}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatSpinner
+            android:id="@+id/spCategory"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintTop_toBottomOf="@id/etMemoTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etMemo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:maxLength="300"
+            android:gravity="top"
+            android:text="@={vm.memoContents}"
+            app:layout_constraintTop_toBottomOf="@id/spCategory"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/tvCount"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="15dp"
+            android:text="@{@string/memo_add_character_count(vm.memoCounter)}"
+            app:layout_constraintBottom_toTopOf="@id/btnDone"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/btnDone"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="@string/memo_add_done"
+            android:textColor="#FFFFFF"
+            android:gravity="center"
+            android:background="@drawable/login_background_drawable"
+            android:enabled="@{vm.doneButtonEnable}"
+            android:onClick="@{()-> vm.saveMemo()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

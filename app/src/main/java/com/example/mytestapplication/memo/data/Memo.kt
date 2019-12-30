@@ -10,7 +10,7 @@ import java.util.*
  */
 @Entity(tableName = "memo")
 data class Memo(
-    @PrimaryKey @ColumnInfo(name = "id") val memoId: String,
+    @PrimaryKey(autoGenerate = true) @ColumnInfo(name = "id") val memoId: Long = 0,
     val title: String,
     val category: String, //할일, 아이디어, 기타
     val description: String,

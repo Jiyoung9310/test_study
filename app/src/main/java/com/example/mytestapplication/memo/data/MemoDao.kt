@@ -2,6 +2,8 @@ package com.example.mytestapplication.memo.data
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 /**
@@ -13,5 +15,11 @@ interface MemoDao {
     fun getMemoList(): LiveData<List<Memo>>
 
     @Query("SELECT * FROM memo WHERE id = :memoId")
-    fun getMemo(memoId: String): LiveData<Memo>?
+    fun getMemo(memoId: Long): LiveData<Memo>?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upserts(vararg entities: Memo)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun upsert(entity: Memo)
 }

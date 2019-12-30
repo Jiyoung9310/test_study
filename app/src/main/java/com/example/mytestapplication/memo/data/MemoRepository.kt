@@ -6,7 +6,9 @@ package com.example.mytestapplication.memo.data
 class MemoRepository private constructor(private val memoDatabase: MemoDatabase) {
     fun getMemoList() = memoDatabase.memoDao().getMemoList()
 
-    fun getMemo(memoId: String) = memoDatabase.memoDao().getMemo(memoId)
+    fun getMemo(memoId: Long) = memoDatabase.memoDao().getMemo(memoId)
+
+    fun addMemo(vararg datas: Memo) = memoDatabase.memoDao().upserts(*datas)
 
     companion object {
 

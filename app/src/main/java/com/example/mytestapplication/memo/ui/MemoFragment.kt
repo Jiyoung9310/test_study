@@ -4,8 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mytestapplication.base.eventObserver
 import com.example.mytestapplication.databinding.FragmentMemoBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
@@ -22,7 +26,7 @@ class MemoFragment : Fragment() {
     private lateinit var viewModel: MemoViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
     private lateinit var binding: FragmentMemoBinding
-    private val adapter: MemoListAdapter = MemoListAdapter()
+    private val memoListAdapter: MemoListAdapter = MemoListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,13 +46,22 @@ class MemoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        binding.rvList.adapter = adapter
-        viewModel.memoListData.observe(this, eventObserver {
-            it.let(adapter::submitList)
+        binding.rvList.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
+            adapter = memoListAdapter
+        }
+
+        viewModel.memoListData.observe(this, Observer {
+            it.let(memoListAdapter::submitList)
         })
 
         viewModel.floatingButtonEvent.observe(this, eventObserver {
             baseViewModel.navigateAddEvent()
+        })
+
+        viewModel.showEmptyMessage.observe(this, Observer {
+            binding.rvList.isVisible = !it
+            binding.tvEmpty.isVisible = it
         })
     }
 

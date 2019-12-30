@@ -21,10 +21,18 @@ class MemoEmptyDaoTestImp: MemoDao {
         return _memoList
     }
 
-    override fun getMemo(memoId: String): LiveData<Memo>? {
+    override fun getMemo(memoId: Long): LiveData<Memo>? {
         _memoList.value?.forEach {
             if(it.memoId == memoId) return _memo.apply { value = it }
         }
         return null
+    }
+
+    override fun upserts(vararg entities: Memo) {
+
+    }
+
+    override fun upsert(entity: Memo) {
+
     }
 }

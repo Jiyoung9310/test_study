@@ -51,6 +51,10 @@ class MemoActivity : AppCompatActivity() {
             }
         })
 
+        viewModel.navigateDetailEvent.observe(this, eventObserver {
+
+        })
+
         viewModel.navigateMainEvent.observe(this, eventObserver {
             if(it) {
                 supportFragmentManager.popBackStack()
