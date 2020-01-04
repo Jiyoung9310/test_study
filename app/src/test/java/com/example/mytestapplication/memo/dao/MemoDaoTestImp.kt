@@ -36,7 +36,5 @@ class MemoDaoTestImp: MemoDao {
 
     }
 
-    override fun upsert(entity: Memo) {
-
-    }
+    override fun upsert(entity: Memo) : Long = 0
 }

@@ -2,17 +2,18 @@ package com.example.mytestapplication.memo
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.mytestapplication.memo.data.Memo
+import com.example.mytestapplication.memo.data.MemoDetailData
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.data.MemoTile
 import com.example.mytestapplication.memo.database.FakeEmptyMemoDatabase
 import com.example.mytestapplication.memo.database.FakeMemoDatabase
 import com.example.mytestapplication.memo.ui.MemoAddViewModel
 import com.example.mytestapplication.memo.ui.MemoViewModel
+import com.example.mytestapplication.memo.ui.MemoDetailViewModel
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import kotlin.math.exp
 
 class MemoViewModelTest {
     @Rule
@@ -22,12 +23,15 @@ class MemoViewModelTest {
     private lateinit var viewModel : MemoViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
     private lateinit var addViewModel : MemoAddViewModel
+    private lateinit var detailViewModel : MemoDetailViewModel
 
     @Before
     fun setUp() {
 //        viewModel = MemoViewModel(MemoRepository.getInstance(MemoDaoTestImp()))
-        baseViewModel = MemoBaseViewModel(MemoRepository.getInstance(FakeMemoDatabase()))
-        addViewModel = MemoAddViewModel(MemoRepository.getInstance(FakeMemoDatabase()))
+        val repo = MemoRepository.getInstance(FakeMemoDatabase())
+        baseViewModel = MemoBaseViewModel(repo)
+        addViewModel = MemoAddViewModel(repo)
+        detailViewModel = MemoDetailViewModel(1, repo)
     }
 
     @Test
@@ -63,8 +67,8 @@ class MemoViewModelTest {
             baseViewModel.navigateAddEvent()
         }
         baseViewModel.navigateAddEvent.observeForever {
-            println("navigateAddEvent : ${it.peekContent()}")
-            assertEquals(expectedResult, it.peekContent())
+            println("navigateAddEvent : $it")
+            assertEquals(expectedResult, it)
         }
         viewModel.onClickFloatingButton()
     }
@@ -128,8 +132,9 @@ class MemoViewModelTest {
     }
 
     @Test
-    fun `(Given) 메모 추가 화면에서 (When) 모든 정보 입력 후 완료 클릭  (Then) 메모저장` () {
+    fun `(Given) 메모 추가 화면에서 (When) 모든 정보 입력 후 완료 클릭  (Then) 메모저장, 상세화면으로 이동` () {
         val expectedResult = Memo(
+            memoId = 0,
             title = "abc",
             category = "아이디어",
             description = "일이삼사오육칠팔구십"
@@ -146,17 +151,22 @@ class MemoViewModelTest {
         }
         addViewModel.saveMemoEvent.observeForever {
             println("doneButtonEnable : $it")
-            assertEquals(expectedResult, it)
+            addViewModel.navigateDetailEvent(it)
+        }
+        addViewModel.navigateDetailEvent.observeForever {
+            assertEquals(expectedResult.memoId, it)
         }
     }
 
     @Test
-    fun `(Given) 메모 추가 화면에서 (When) 메모저장 후 (Then) 상세화면으로 이동`() {
-        val expectedResult = true
-        addViewModel.saveMemoEvent.observeForever {
-            addViewModel.navigateDetailEvent()
-        }
-        addViewModel.navigateDetailEvent.observeForever {
+    fun `(Given) 메모 상세 화면 진입 시 (When) x (Then) 메모 데이터 받아오기`() {
+        val expectedResult = MemoDetailData(
+            title = "메모1",
+            category = "기타",
+            contents = "메모이다1"
+        )
+        detailViewModel.memoData.observeForever {
+            println("memoData : $it")
             assertEquals(expectedResult, it)
         }
     }

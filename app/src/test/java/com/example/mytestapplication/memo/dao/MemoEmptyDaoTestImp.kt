@@ -32,7 +32,5 @@ class MemoEmptyDaoTestImp: MemoDao {
 
     }
 
-    override fun upsert(entity: Memo) {
-
-    }
+    override fun upsert(entity: Memo) = 0L
 }

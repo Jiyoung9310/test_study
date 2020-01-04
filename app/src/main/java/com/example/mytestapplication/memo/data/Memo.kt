@@ -15,4 +15,4 @@ data class Memo(
     val category: String, //할일, 아이디어, 기타
     val description: String,
     val writeDt: Calendar = Calendar.getInstance()
-    )
+)

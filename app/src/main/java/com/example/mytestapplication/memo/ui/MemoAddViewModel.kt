@@ -26,9 +26,9 @@ class MemoAddViewModel(val memoRepo : MemoRepository) : ViewModel() {
 
     private val _doneEvent = SingleLiveEvent<Unit>()
     val  doneEvent get() = _doneEvent
-    private val _saveMemoEvent = SingleLiveEvent<Memo>()
+    private val _saveMemoEvent = SingleLiveEvent<Long>()
     val saveMemoEvent get() = _saveMemoEvent
-    private val _navigateDetailEvent = SingleLiveEvent<Unit>()
+    private val _navigateDetailEvent = SingleLiveEvent<Long>()
     val navigateDetailEvent get() = _navigateDetailEvent
 
     init {
@@ -57,25 +57,22 @@ class MemoAddViewModel(val memoRepo : MemoRepository) : ViewModel() {
         }
     }
 
-    private suspend fun addMemoDatabase(): Memo = coroutineScope {
+    private suspend fun addMemoDatabase() = coroutineScope {
         val one = async(Dispatchers.IO) {
             try {
-                val memo = Memo(
+                memoRepo.addMemo(Memo(
                     title = memoTitle.value ?: "",
                     category = memoCategory.value ?: "",
                     description = memoContents.value ?: ""
-                )
-                memoRepo.addMemo(memo)
-                memo
+                ))
             } finally {
                 Log.d("MemoAddViewModel", "finally database update memo")
             }
         }
         _saveMemoEvent.postValue(one.await())
-        one.await()
     }
 
-    fun navigateDetailEvent() {
-        _navigateDetailEvent.call()
+    fun navigateDetailEvent(memoId: Long) {
+        _navigateDetailEvent.postValue(memoId)
     }
 }

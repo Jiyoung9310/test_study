@@ -3,15 +3,15 @@ package com.example.mytestapplication.memo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.mytestapplication.R
-import com.example.mytestapplication.base.eventObserver
-import com.example.mytestapplication.login.HomeFragment
 import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.ui.MemoAddFragment
 import com.example.mytestapplication.memo.ui.MemoFragment
-import kotlinx.android.synthetic.main.activity_memo.*
+import com.example.mytestapplication.memo.ui.MemoDetailFragment
+import com.example.mytestapplication.memo.ui.MemoDetailFragment.Companion.FRAGMENT_MEMO_ID
 
 class MemoActivity : AppCompatActivity() {
 
@@ -38,7 +38,7 @@ class MemoActivity : AppCompatActivity() {
             supportActionBar?.setTitle(R.string.memo_main_actionbar_title)
         }
 
-        viewModel.navigateAddEvent.observe(this, eventObserver {
+        viewModel.navigateAddEvent.observe(this, Observer {
             if(it) {
                 supportFragmentManager.beginTransaction().replace(
                     R.id.container,
@@ -51,11 +51,21 @@ class MemoActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.navigateDetailEvent.observe(this, eventObserver {
-
+        viewModel.navigateDetailEvent.observe(this, Observer {
+            val bundle = Bundle().apply{ putLong(FRAGMENT_MEMO_ID, it) }
+            supportFragmentManager.beginTransaction().replace(
+                R.id.container,
+                MemoDetailFragment().apply {
+                    arguments = bundle
+                }
+            ).addToBackStack(memoBackStack).commit()
+            supportActionBar?.run{
+                setTitle(R.string.memo_detail_actionbar_title)
+                setDisplayHomeAsUpEnabled(true)
+            }
         })
 
-        viewModel.navigateMainEvent.observe(this, eventObserver {
+        viewModel.navigateMainEvent.observe(this, Observer {
             if(it) {
                 supportFragmentManager.popBackStack()
                 supportActionBar?.run{

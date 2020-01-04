@@ -8,7 +8,9 @@ class MemoRepository private constructor(private val memoDatabase: MemoDatabase)
 
     fun getMemo(memoId: Long) = memoDatabase.memoDao().getMemo(memoId)
 
-    fun addMemo(vararg datas: Memo) = memoDatabase.memoDao().upserts(*datas)
+    fun addMemos(vararg datas: Memo) = memoDatabase.memoDao().upserts(*datas)
+
+    fun addMemo(data: Memo) = memoDatabase.memoDao().upsert(data)
 
     companion object {
 

@@ -21,5 +21,5 @@ interface MemoDao {
     fun upserts(vararg entities: Memo)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun upsert(entity: Memo)
+    fun upsert(entity: Memo): Long
 }

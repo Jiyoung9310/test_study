@@ -22,4 +22,8 @@
     <string name="memo_add_category_hint">선택하세요.</string>
     <string name="memo_add_character_count">(%d/300)</string>
     <string name="memo_add_done">완료</string>
+
+    // 메모 상세
+    <string name="memo_detail_actionbar_title">메모 상세</string>
+    <string name="memo_detail_contents_empty">입력된 내용이 없습니다.</string>
 </resources>

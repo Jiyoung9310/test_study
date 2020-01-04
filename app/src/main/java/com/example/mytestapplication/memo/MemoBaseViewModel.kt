@@ -4,29 +4,30 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.mytestapplication.base.Event
+import com.example.mytestapplication.base.SingleLiveEvent
 import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
 
 class MemoBaseViewModel(val memoRepo : MemoRepository) : ViewModel() {
-    private val _navigateAddEvent = MutableLiveData<Event<Boolean>>()
-    val navigateAddEvent : LiveData<Event<Boolean>> get() = _navigateAddEvent
+    private val _navigateAddEvent = SingleLiveEvent<Boolean>()
+    val navigateAddEvent : LiveData<Boolean> get() = _navigateAddEvent
 
-    private val _navigateMainEvent = MutableLiveData<Event<Boolean>>()
-    val navigateMainEvent : LiveData<Event<Boolean>> get() = _navigateMainEvent
+    private val _navigateMainEvent = SingleLiveEvent<Boolean>()
+    val navigateMainEvent : LiveData<Boolean> get() = _navigateMainEvent
 
-    private val _navigateDetailEvent = MutableLiveData<Event<Boolean>>()
-    val navigateDetailEvent get() = _navigateDetailEvent
+    private val _navigateDetailEvent = SingleLiveEvent<Long>()
+    val navigateDetailEvent : LiveData<Long> get() = _navigateDetailEvent
 
     fun navigateAddEvent() {
-        _navigateAddEvent.value = Event(true)
+        _navigateAddEvent.postValue(true)
     }
 
     fun navigateMainEvent() {
-        _navigateMainEvent.value = Event(true)
+        _navigateMainEvent.postValue(true)
     }
 
-    fun navigateDetailEvent() {
-        _navigateMainEvent.value = Event(true)
+    fun navigateDetailEvent(memoId: Long) {
+        _navigateDetailEvent.postValue(memoId)
     }
 
 }

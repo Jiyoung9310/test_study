@@ -71,11 +71,11 @@ class MemoAddFragment : Fragment() {
         })
 
         viewModel.saveMemoEvent.observe(this, Observer {
-            viewModel.navigateDetailEvent()
+            viewModel.navigateDetailEvent(it)
         })
 
         viewModel.navigateDetailEvent.observe(this, Observer {
-            baseViewModel.navigateDetailEvent()
+            baseViewModel.navigateDetailEvent(it)
         })
 
     }
