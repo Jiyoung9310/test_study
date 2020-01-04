@@ -10,11 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mytestapplication.base.AdapterItemClickListener
 import com.example.mytestapplication.base.eventObserver
 import com.example.mytestapplication.databinding.FragmentMemoBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.ui.adapter.MemoListAdapter
+import kotlinx.android.synthetic.main.fragment_memo.*
 
 class MemoFragment : Fragment() {
 
@@ -46,6 +48,12 @@ class MemoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        memoListAdapter.listener = object : AdapterItemClickListener {
+            override fun onClickItem(id: Long) {
+                viewModel.onClickItem(id)
+            }
+        }
+
         binding.rvList.apply {
             layoutManager = LinearLayoutManager(context, RecyclerView.VERTICAL, false)
             adapter = memoListAdapter
@@ -53,6 +61,10 @@ class MemoFragment : Fragment() {
 
         viewModel.memoListData.observe(this, Observer {
             it.let(memoListAdapter::submitList)
+        })
+
+        viewModel.memoItemEvent.observe(this, eventObserver {
+            baseViewModel.navigateDetailEvent(it)
         })
 
         viewModel.floatingButtonEvent.observe(this, eventObserver {

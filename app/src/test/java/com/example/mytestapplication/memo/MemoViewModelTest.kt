@@ -74,6 +74,21 @@ class MemoViewModelTest {
     }
 
     @Test
+    fun `(Given) 홈 화면에서 (When) 메모 아이템 클릭 시 (Then) 메모상세 화면으로 이동`() {
+        viewModel = MemoViewModel(baseViewModel.memoRepo)
+        val expectedResult = 0L
+        viewModel.memoItemEvent.observeForever {
+            println("memoItemEvent : ${it.peekContent()}")
+            baseViewModel.navigateDetailEvent(it.peekContent())
+        }
+        baseViewModel.navigateDetailEvent.observeForever {
+            println("navigateDetailEvent : $it")
+            assertEquals(expectedResult, it)
+        }
+        viewModel.onClickItem(0L)
+    }
+
+    @Test
     fun `(Given) 메모추가화면 진입 시 (When) x (Then) 완료버튼 비활성화`() {
         val expectedResult = false
         addViewModel.memoTitle.postValue("")

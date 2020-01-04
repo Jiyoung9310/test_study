@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="listener"
+            type="com.example.mytestapplication.base.AdapterItemClickListener" />
         <variable
             name="item"
             type="com.example.mytestapplication.memo.data.MemoTile" />
@@ -12,8 +14,10 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItem"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="@{()->listener.onClickItem(item.id)}"
         android:padding="15dp">
 
         <TextView

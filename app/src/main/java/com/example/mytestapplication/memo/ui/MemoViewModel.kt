@@ -32,12 +32,18 @@ class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
     private val _floatingButtonEvent = MutableLiveData<Event<Boolean>>()
     val floatingButtonEvent : LiveData<Event<Boolean>> get() = _floatingButtonEvent
 
+    private val _memoItemEvent = MutableLiveData<Event<Long>>()
+    val memoItemEvent : LiveData<Event<Long>> get() = _memoItemEvent
     init {
         _showEmptyMessage.addSource(_memoListData) { _showEmptyMessage.value = (_memoListData.value ?: arrayListOf<Memo>()).isEmpty()}
     }
 
     fun onClickFloatingButton() {
         _floatingButtonEvent.value = Event(true)
+    }
+
+    fun onClickItem(item: Long) {
+        _memoItemEvent.value = Event(item)
     }
 
 }
