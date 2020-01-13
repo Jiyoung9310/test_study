@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import com.example.mytestapplication.R
 import com.example.mytestapplication.databinding.FragmentMemoDetailBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
+import com.example.mytestapplication.memo.MemoBaseViewModelFactory
 
 class MemoDetailFragment : Fragment() {
 
@@ -20,7 +21,6 @@ class MemoDetailFragment : Fragment() {
 
     private lateinit var viewModel: MemoDetailViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
-    private lateinit var viewModelProviders: MemoDetailViewModelFactory
     private lateinit var binding: FragmentMemoDetailBinding
     private var memoId : Long = 0L
 
@@ -41,8 +41,9 @@ class MemoDetailFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         baseViewModel = ViewModelProviders.of(activity!!).get(MemoBaseViewModel::class.java)
-        viewModelProviders = MemoDetailViewModelFactory(memoId, baseViewModel.memoRepo)
-        viewModel = ViewModelProviders.of(this, viewModelProviders).get(MemoDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, MemoBaseViewModelFactory(baseViewModel.memoRepo)).get(MemoDetailViewModel::class.java)
+
+        viewModel.reqMemoData(baseViewModel.currentMemoId)
 
         viewModel.memoData.observe(this, Observer {
             binding.data = it

@@ -9,6 +9,8 @@ import com.example.mytestapplication.memo.data.MemoDatabase
 import com.example.mytestapplication.memo.data.MemoRepository
 
 class MemoBaseViewModel(val memoRepo : MemoRepository) : ViewModel() {
+    var currentMemoId = 0L
+
     private val _navigateAddEvent = SingleLiveEvent<Boolean>()
     val navigateAddEvent : LiveData<Boolean> get() = _navigateAddEvent
 
@@ -27,6 +29,7 @@ class MemoBaseViewModel(val memoRepo : MemoRepository) : ViewModel() {
     }
 
     fun navigateDetailEvent(memoId: Long) {
+        currentMemoId = memoId
         _navigateDetailEvent.postValue(memoId)
     }
 

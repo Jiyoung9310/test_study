@@ -31,12 +31,12 @@ class MemoViewModelTest {
         val repo = MemoRepository.getInstance(FakeMemoDatabase())
         baseViewModel = MemoBaseViewModel(repo)
         addViewModel = MemoAddViewModel(repo)
-        detailViewModel = MemoDetailViewModel(1, repo)
+        detailViewModel = MemoDetailViewModel(repo)
     }
 
     @Test
     fun `(Given) 앱 실행 시 (When) 메모가 없으면 (Then) 없음 메시지 표시`() {
-        viewModel = MemoViewModel(MemoRepository.getInstance(FakeEmptyMemoDatabase()))
+        val viewModel = MemoViewModel(MemoRepository.getInstance(FakeEmptyMemoDatabase()))
         val expectedResult = true
         viewModel.showEmptyMessage.observeForever{
             println("showEmptyMessage : $it")
@@ -161,14 +161,11 @@ class MemoViewModelTest {
             println("doneButtonEnable : $it")
             if(it) addViewModel.onClickDone()
         }
-        addViewModel.doneEvent.observeForever {
-            addViewModel.saveMemo()
-        }
         addViewModel.saveMemoEvent.observeForever {
-            println("doneButtonEnable : $it")
-            addViewModel.navigateDetailEvent(it)
+            println("saveMemoEvent : $it")
+            baseViewModel.navigateDetailEvent(it)
         }
-        addViewModel.navigateDetailEvent.observeForever {
+        baseViewModel.navigateDetailEvent.observeForever {
             assertEquals(expectedResult.memoId, it)
         }
     }

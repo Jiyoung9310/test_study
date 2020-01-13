@@ -19,17 +19,15 @@ class MemoDaoTestImp: MemoDao {
         ))
     }
 
-    private val _memo = MutableLiveData<Memo>()
-
     override fun getMemoList(): LiveData<List<Memo>> {
         return _memoList
     }
 
-    override fun getMemo(memoId: Long): LiveData<Memo>? {
+    override fun getMemo(memoId: Long): Memo {
         _memoList.value?.forEach {
-            if(it.memoId == memoId) return _memo.apply { value = it }
+            if(it.memoId == memoId) return it
         }
-        return null
+        return Memo(memoId = 0, title = "", category = "", description = "", writeDt = converters.datestampToCalendar(1576593650220))
     }
 
     override fun upserts(vararg entities: Memo) {

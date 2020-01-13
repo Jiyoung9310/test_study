@@ -77,7 +77,7 @@
             android:gravity="center"
             android:background="@drawable/login_background_drawable"
             android:enabled="@{vm.doneButtonEnable}"
-            android:onClick="@{()-> vm.saveMemo()}"
+            android:onClick="@{()-> vm.onClickDone()}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

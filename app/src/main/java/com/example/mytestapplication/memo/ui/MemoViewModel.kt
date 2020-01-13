@@ -19,7 +19,7 @@ class MemoViewModel(memoRepo : MemoRepository) : ViewModel() {
 
     private val _memoListData = Transformations.map(memoRepo.getMemoList()) {
         val list = arrayListOf<MemoTile>()
-        it.forEach { memo ->
+        it.sortedByDescending { it.writeDt }.forEach { memo ->
             list.add(MemoTile(memo.memoId, memo.title, simpleDateFormat.format(memo.writeDt.time)))
         }
         list

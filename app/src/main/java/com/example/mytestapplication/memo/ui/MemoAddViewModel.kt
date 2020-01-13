@@ -1,9 +1,7 @@
 package com.example.mytestapplication.memo.ui
 
 import android.util.Log
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.example.mytestapplication.base.Event
 import com.example.mytestapplication.base.SingleLiveEvent
 import com.example.mytestapplication.memo.data.Memo
@@ -22,19 +20,14 @@ class MemoAddViewModel(val memoRepo : MemoRepository) : ViewModel() {
     val memoCategory = MutableLiveData<String>().apply { postValue(categoryArray[0]) }
     val memoContents = MutableLiveData<String>().apply { postValue("") }
     val doneButtonEnable = MediatorLiveData<Boolean>()
-    val memoCounter = MediatorLiveData<Int>()
+    val memoCounter = Transformations.map(memoContents) { it?.length ?: 0 }
 
-    private val _doneEvent = SingleLiveEvent<Unit>()
-    val  doneEvent get() = _doneEvent
     private val _saveMemoEvent = SingleLiveEvent<Long>()
-    val saveMemoEvent get() = _saveMemoEvent
-    private val _navigateDetailEvent = SingleLiveEvent<Long>()
-    val navigateDetailEvent get() = _navigateDetailEvent
+    val saveMemoEvent : LiveData<Long> get() = _saveMemoEvent
 
     init {
         doneButtonEnable.addSource(memoTitle) { doneButtonEnable.value = validationDoneButton() }
         doneButtonEnable.addSource(memoCategory) { doneButtonEnable.value = validationDoneButton() }
-        memoCounter.addSource(memoContents) { memoCounter.value = (memoContents.value?:"").length }
     }
 
     private fun validationDoneButton() = (memoTitle.value?: "").isNotEmpty() && (memoCategory.value?:"") != categoryArray[0]
@@ -44,10 +37,7 @@ class MemoAddViewModel(val memoRepo : MemoRepository) : ViewModel() {
     }
 
     fun onClickDone() {
-        _doneEvent.call()
-    }
-
-    fun saveMemo() {
+//        _doneEvent.call()
         runBlocking {
             try {
                 addMemoDatabase()
@@ -70,9 +60,5 @@ class MemoAddViewModel(val memoRepo : MemoRepository) : ViewModel() {
             }
         }
         _saveMemoEvent.postValue(one.await())
-    }
-
-    fun navigateDetailEvent(memoId: Long) {
-        _navigateDetailEvent.postValue(memoId)
     }
 }

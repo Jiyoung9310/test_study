@@ -14,6 +14,7 @@ import com.example.mytestapplication.base.AdapterItemClickListener
 import com.example.mytestapplication.base.eventObserver
 import com.example.mytestapplication.databinding.FragmentMemoBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
+import com.example.mytestapplication.memo.MemoBaseViewModelFactory
 import com.example.mytestapplication.memo.data.MemoRepository
 import com.example.mytestapplication.memo.ui.adapter.MemoListAdapter
 import kotlinx.android.synthetic.main.fragment_memo.*
@@ -24,7 +25,6 @@ class MemoFragment : Fragment() {
         fun newInstance() = MemoFragment()
     }
 
-    private lateinit var viewModelProviders: MemoViewModelFactory
     private lateinit var viewModel: MemoViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
     private lateinit var binding: FragmentMemoBinding
@@ -36,8 +36,7 @@ class MemoFragment : Fragment() {
     ): View {
 
         baseViewModel = ViewModelProviders.of(activity!!).get(MemoBaseViewModel::class.java)
-        viewModelProviders = MemoViewModelFactory(baseViewModel.memoRepo)
-        viewModel = ViewModelProviders.of(this, viewModelProviders).get(MemoViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, MemoBaseViewModelFactory(baseViewModel.memoRepo)).get(MemoViewModel::class.java)
 
         binding = FragmentMemoBinding.inflate(inflater, container, false)
         binding.vm = viewModel

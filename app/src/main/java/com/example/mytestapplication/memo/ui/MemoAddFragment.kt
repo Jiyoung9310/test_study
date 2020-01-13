@@ -14,12 +14,12 @@ import com.example.mytestapplication.R
 import com.example.mytestapplication.base.eventObserver
 import com.example.mytestapplication.databinding.FragmentMemoAddBinding
 import com.example.mytestapplication.memo.MemoBaseViewModel
+import com.example.mytestapplication.memo.MemoBaseViewModelFactory
 
 class MemoAddFragment : Fragment() {
 
     private lateinit var viewModel: MemoAddViewModel
     private lateinit var baseViewModel : MemoBaseViewModel
-    private lateinit var viewModelProviders: MemoAddViewModelFactory
     private lateinit var binding: FragmentMemoAddBinding
 
     override fun onCreateView(
@@ -33,8 +33,7 @@ class MemoAddFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         baseViewModel = ViewModelProviders.of(activity!!).get(MemoBaseViewModel::class.java)
-        viewModelProviders = MemoAddViewModelFactory(baseViewModel.memoRepo)
-        viewModel = ViewModelProviders.of(this, viewModelProviders).get(MemoAddViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, MemoBaseViewModelFactory(baseViewModel.memoRepo)).get(MemoAddViewModel::class.java)
         binding.vm = viewModel
 
         val items = viewModel.categoryArray
@@ -66,15 +65,7 @@ class MemoAddFragment : Fragment() {
             binding.btnDone.isEnabled = it
         })
 
-        viewModel.doneEvent.observe(this, Observer {
-            viewModel.saveMemo()
-        })
-
         viewModel.saveMemoEvent.observe(this, Observer {
-            viewModel.navigateDetailEvent(it)
-        })
-
-        viewModel.navigateDetailEvent.observe(this, Observer {
             baseViewModel.navigateDetailEvent(it)
         })
 
